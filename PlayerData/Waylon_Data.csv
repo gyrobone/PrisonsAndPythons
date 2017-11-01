@@ -1,13 +1,14 @@
 name,Waylon
-str,11
-str_mod,0
-dex,10
-dex_mod,0
-con,18
-con_mod,4
-int,18
-int_mod,4
-wis,18
-wis_mod,4
+char_name,Test Name
+str,15
+str_mod,2
+dex,13
+dex_mod,1
+con,14
+con_mod,2
+int,14
+int_mod,2
+wis,9
+wis_mod,-1
 cha,11
 cha_mod,0

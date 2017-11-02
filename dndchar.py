@@ -12,6 +12,8 @@ player_data = {}
 valid_races = ['Dragonborn', 'Dwarf', 'Elf', 'Gnome', 'Half Elf', 'Half Orc', 'Halfling', 'Human', 'Tiefling']
 valid_classes = ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard']
 
+abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha']
+
 
 # Main function that handles the character creation and data storage
 def create_char(name, char_name, race, clss):
@@ -38,13 +40,21 @@ def create_char(name, char_name, race, clss):
         return
 
     # Generate stats based on class and saves player data to CSV
-    gen_stats(clss)
+    gen_abilities(clss)
+    add_race_mods(race)
+    gen_ability_mods()
+
+    print("Here is your character:")
+    for key, value in player_data.items():
+        print(key.title() + ":", value)
+    print("\n")
+
     save_playerdata(name)
 
 
 # Generates random attribute scores, assigns to best spot
 # based on race and class, and calculates modifiers
-def gen_stats(clss):
+def gen_abilities(clss):
     # Generates list of 6 numbers and sorts from low to high
     number_list = []
     i = 0
@@ -52,102 +62,124 @@ def gen_stats(clss):
         number = random.randint(8, 18)
         number_list.append(number)
         i += 1
-    attrib_list = sorted(number_list)
+    ability_list = sorted(number_list)
 
     # Character optimization
     if clss == "Barbarian":
-        str_attrib(attrib_list[5])
-        dex_attrib(attrib_list[4])
-        con_attrib(attrib_list[3])
-        int_attrib(attrib_list[0])
-        wis_attrib(attrib_list[2])
-        cha_attrib(attrib_list[1])
+        player_data['str'] = ability_list[5]
+        player_data['dex'] = ability_list[4]
+        player_data['con'] = ability_list[3]
+        player_data['int'] = ability_list[0]
+        player_data['wis'] = ability_list[2]
+        player_data['cha'] = ability_list[1]
     elif clss == "Rogue" or clss == "Ranger":
-        str_attrib(attrib_list[0])
-        dex_attrib(attrib_list[5])
-        con_attrib(attrib_list[4])
-        int_attrib(attrib_list[1])
-        wis_attrib(attrib_list[3])
-        cha_attrib(attrib_list[2])
-    else:
-        str_attrib(attrib_list[5])
-        dex_attrib(attrib_list[4])
-        con_attrib(attrib_list[3])
-        int_attrib(attrib_list[2])
-        wis_attrib(attrib_list[1])
-        cha_attrib(attrib_list[0])
-
-# These all assign abilities and their modifiers to the player_data list to be saved later
-def str_attrib(str):
-    if str == 10:
-        str_mod = 0
-    elif str > 10:
-        str_mod = (str - 10) // 2
-    elif str < 10:
-        str_mod = -1
-
-    player_data['str'] = str
-    player_data['str_mod'] = str_mod
-
-
-def dex_attrib(dex):
-    if dex == 10:
-        dex_mod = 0
-    elif dex > 10:
-        dex_mod = (dex - 10) // 2
-    elif dex < 10:
-        dex_mod = -1
-
-    player_data['dex'] = dex
-    player_data['dex_mod'] = dex_mod
-
-
-def con_attrib(con):
-    if con == 10:
-        con_mod = 0
-    elif con > 10:
-        con_mod = (con - 10) // 2
-    elif con < 10:
-        con_mod = -1
-
-    player_data['con'] = con
-    player_data['con_mod'] = con_mod
-
-
-def int_attrib(int):
-    if int == 10:
-        int_mod = 0
-    elif int > 10:
-        int_mod = (int - 10) // 2
-    elif int < 10:
-        int_mod = -1
-
-    player_data['int'] = int
-    player_data['int_mod'] = int_mod
+        player_data['str'] = ability_list[0]
+        player_data['dex'] = ability_list[5]
+        player_data['con'] = ability_list[4]
+        player_data['int'] = ability_list[1]
+        player_data['wis'] = ability_list[3]
+        player_data['cha'] = ability_list[2]
+    elif clss == "Sorcerer" or clss == "Warlock" or clss == "Bard":
+        player_data['str'] = ability_list[0]
+        player_data['dex'] = ability_list[4]
+        player_data['con'] = ability_list[3]
+        player_data['int'] = ability_list[2]
+        player_data['wis'] = ability_list[1]
+        player_data['cha'] = ability_list[5]
+    elif clss == "Wizard":
+        player_data['str'] = ability_list[0]
+        player_data['dex'] = ability_list[3]
+        player_data['con'] = ability_list[4]
+        player_data['int'] = ability_list[5]
+        player_data['wis'] = ability_list[2]
+        player_data['cha'] = ability_list[1]
+    elif clss == "Paladin":
+        player_data['str'] = ability_list[4]
+        player_data['dex'] = ability_list[2]
+        player_data['con'] = ability_list[3]
+        player_data['int'] = ability_list[0]
+        player_data['wis'] = ability_list[1]
+        player_data['cha'] = ability_list[5]
+    elif clss == "Monk":
+        player_data['str'] = ability_list[2]
+        player_data['dex'] = ability_list[5]
+        player_data['con'] = ability_list[3]
+        player_data['int'] = ability_list[1]
+        player_data['wis'] = ability_list[4]
+        player_data['cha'] = ability_list[0]
+    elif clss == "Fighter":
+        player_data['str'] = ability_list[5]
+        player_data['dex'] = ability_list[2]
+        player_data['con'] = ability_list[4]
+        player_data['int'] = ability_list[1]
+        player_data['wis'] = ability_list[3]
+        player_data['cha'] = ability_list[0]
+    elif clss == "Druid":
+        player_data['str'] = ability_list[0]
+        player_data['dex'] = ability_list[3]
+        player_data['con'] = ability_list[4]
+        player_data['int'] = ability_list[2]
+        player_data['wis'] = ability_list[5]
+        player_data['cha'] = ability_list[1]
+    elif clss == "Cleric":
+        player_data['str'] = ability_list[1]
+        player_data['dex'] = ability_list[3]
+        player_data['con'] = ability_list[4]
+        player_data['int'] = ability_list[0]
+        player_data['wis'] = ability_list[5]
+        player_data['cha'] = ability_list[2]
 
 
-def wis_attrib(wis):
-    if wis == 10:
-        wis_mod = 0
-    elif wis > 10:
-        wis_mod = (wis - 10) // 2
-    elif wis < 10:
-        wis_mod = -1
+# Generates and stores each ability modifier
+def gen_ability_mods():
+    for key in list(player_data):
+        if key in abilities:
+            value = player_data.get(key)
+            if value == 10:
+                ability_mod = 0
+            elif value > 10:
+                ability_mod = (value - 10) // 2
+            elif value < 10:
+                ability_mod = -1
+            player_data[key + "_mod"] = ability_mod
 
-    player_data['wis'] = wis
-    player_data['wis_mod'] = wis_mod
 
-
-def cha_attrib(cha):
-    if cha == 10:
-        cha_mod = 0
-    elif cha > 10:
-        cha_mod = (cha - 10) // 2
-    elif cha < 10:
-        cha_mod = -1
-
-    player_data['cha'] = cha
-    player_data['cha_mod'] = cha_mod
+def add_race_mods(race):
+    if race == "Dragonborn":
+        player_data['str'] += 2
+        player_data['cha'] += 1
+    elif race == "Dwarf":
+        player_data['con'] += 2
+    elif race == "Elf":
+        player_data['dex'] += 2
+    elif race == "Gnome":
+        player_data['int'] += 2
+    elif race == "Half Elf":
+        player_data['cha'] += 2
+        print("As a Half Elf, you can choose two abilities to increase by 1\nOr you can increase 1 ability by two\nYour current scores are: ")
+        for key, value in player_data.items():
+            if key in abilities:
+                print(key + ":", value)
+        input1 = input("What is your first pick? (Ex. str, dex, con...)\n").lower()
+        input2 = input("What is your second pick?\n").lower()
+        if input1 and input2 in abilities:
+            player_data[input1] += 1
+            player_data[input2] += 1
+    elif race == "Half Orc":
+        player_data['str'] += 2
+        player_data['con'] += 1
+    elif race == "Halfling":
+        player_data['dex'] += 2
+    elif race == "Human":
+        player_data['str'] += 1
+        player_data['dex'] += 1
+        player_data['con'] += 1
+        player_data['int'] += 1
+        player_data['wis'] += 1
+        player_data['cha'] += 1
+    elif race == "Tiefling":
+        player_data['cha'] += 2
+        player_data['int'] += 1
 
 
 # Saves player data to new file if it doesn't exist already

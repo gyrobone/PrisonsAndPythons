@@ -20,6 +20,8 @@ while True:
     elif user_input == "exit":
         print("Goodbye")
         break
+    elif user_input == "test":
+        dndchar.create_char('Test', 'Test', 'Half Orc', 'Barbarian')
     else:
         print("Please Enter Valid Command")
 

@@ -1,6 +1,7 @@
 import csv
 import random
 import os
+import skills
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -8,10 +9,17 @@ invalid_chars = "1234567890!@#$%^&*()_+-=[]{}\|;:'\",<.>/?"
 
 player_data = {}
 
-# These are the valid races and classes that can be specified
-valid_races = ['Dragonborn', 'Dwarf', 'Elf', 'Gnome', 'Half Elf', 'Half Orc', 'Halfling', 'Human', 'Tiefling']
-valid_classes = ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard']
+# Races and Classes
+valid_races = ['Dragonborn', 'Dwarf', 'Elf',
+               'Gnome', 'Half Elf', 'Half Orc',
+               'Halfling', 'Human', 'Tiefling']
 
+valid_classes = ['Barbarian', 'Bard', 'Cleric',
+                 'Druid', 'Fighter', 'Monk',
+                 'Paladin', 'Ranger', 'Rogue',
+                 'Sorcerer', 'Warlock', 'Wizard']
+
+# Ability Abbreviations
 abilities = ['str', 'dex', 'con', 'int', 'wis', 'cha']
 
 
@@ -44,12 +52,15 @@ def create_char(name, char_name, race, clss):
     add_race_mods(race)
     gen_ability_mods()
 
-    print("Here is your character:")
+    print("Here is your character so far:")
     for key, value in player_data.items():
         print(key.title() + ":", value)
     print("\n")
-
-    save_playerdata(name)
+    skill = input("Would you like to work on skills now? (Type yes or no)\n").lower()
+    if skill == "yes":
+        skills.gen_skills(clss)
+    else:
+        save_playerdata(name)
 
 
 # Generates random attribute scores, assigns to best spot
@@ -156,7 +167,9 @@ def add_race_mods(race):
         player_data['int'] += 2
     elif race == "Half Elf":
         player_data['cha'] += 2
-        print("As a Half Elf, you can choose two abilities to increase by 1\nOr you can increase 1 ability by two\nYour current scores are: ")
+        print("As a Half Elf, you can choose two abilities to increase by 1\n"
+              "Or you can increase 1 ability by two\n"
+              "Your current scores are: ")
         for key, value in player_data.items():
             if key in abilities:
                 print(key + ":", value)
@@ -182,13 +195,22 @@ def add_race_mods(race):
         player_data['int'] += 1
 
 
+def add_skills(skills_list):
+    i = 0
+    while i < len(skills_list):
+        player_data['skill_prof' + str(i)] = skills_list[i]
+        i += 1
+    save_playerdata(player_data.get('name'))
+
+
 # Saves player data to new file if it doesn't exist already
 # If it does, it asks to player to overwrite it or save as a new copy ("COPY_Player_Data.csv")
 def save_playerdata(name):
     filename = str(name) + "_Data.csv"
     if os.path.exists(dir_path + "/PlayerData/" + filename):
         print("File Already Exists")
-        response = input("Would you like to overwrite it or save as a new copy?\nType 'overwrite' or 'new copy'\n").lower()
+        response = input("Would you like to overwrite it or save as a new copy?\n"
+                         "Type 'overwrite' or 'new copy'\n").lower()
         if response == "overwrite":
             w = csv.writer(open(dir_path + "/PlayerData/" + filename, "w"))
             for key, val in player_data.items():

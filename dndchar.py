@@ -111,10 +111,27 @@ def cha_attrib():
 
 
 def save_playerdata(name):
-    # Check if CSV file exists, if not, save player data in CSV file
+    # Saves player data to new file if it doesn't exist already
+    # If it does, it asks to player to overwrite it or save as a new copy ("COPY_Player_Data.csv")
     filename = str(name) + "_Data.csv"
-    w = csv.writer(open(dir_path + "/PlayerData/" + filename, "w"))
-    for key, val in player_data.items():
-        w.writerow([key, val])
-    print("Player Data Saved")
+    if os.path.exists(dir_path + "/PlayerData/" + filename):
+        print("File Already Exists")
+        response = input("Would you like to overwrite it or save as a new copy?\nType 'overwrite' or 'new copy'\n").lower()
+        if response == "overwrite":
+            w = csv.writer(open(dir_path + "/PlayerData/" + filename, "w"))
+            for key, val in player_data.items():
+                w.writerow([key, val])
+            print("Player Data Saved")
+        elif response == "new copy":
+            w = csv.writer(open(dir_path + "/PlayerData/COPY_" + filename, "w"))
+            for key, val in player_data.items():
+                w.writerow([key, val])
+            print("Player Data Saved")
+        else:
+            print("Please Enter Valid Command")
+    else:
+        w = csv.writer(open(dir_path + "/PlayerData/" + filename, "w"))
+        for key, val in player_data.items():
+            w.writerow([key, val])
+        print("Player Data Saved")
 

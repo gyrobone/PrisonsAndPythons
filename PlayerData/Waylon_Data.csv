@@ -1,14 +1,14 @@
 name,Waylon
-char_name,Test Name
-str,15
-str_mod,2
+char_name,Asdf
+str,18
+str_mod,4
 dex,13
 dex_mod,1
-con,14
-con_mod,2
-int,14
-int_mod,2
-wis,9
-wis_mod,-1
-cha,11
-cha_mod,0
+con,17
+con_mod,3
+int,17
+int_mod,3
+wis,10
+wis_mod,0
+cha,12
+cha_mod,1

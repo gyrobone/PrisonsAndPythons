@@ -59,6 +59,7 @@ def create_char(name, char_name, race, clss):
     skill = input("Would you like to work on skills now? (Type yes or no)\n").lower()
     if skill == "yes":
         skills.gen_skills(clss)
+        skills.skill_mods(name, player_data)
     else:
         save_playerdata(name)
 

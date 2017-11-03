@@ -1,16 +1,20 @@
 name,Waylon
-char_name,Asdf
+char_name,Grognak
 race,Half Orc
-class,Ranger
-str,10
-str_mod,0
-dex,9
-dex_mod,-1
-con,13
-con_mod,1
+class,Barbarian
+str,18
+dex,11
+con,12
 int,9
+wis,10
+cha,10
+str_mod,4
+dex_mod,0
+con_mod,1
 int_mod,-1
-wis,13
-wis_mod,1
-cha,16
-cha_mod,3
+wis_mod,0
+cha_mod,0
+skill_prof0,Strength Saving Throws
+skill_prof1,Constitution Saving Throws
+skill_prof2,Athletics
+skill_prof3,Animal Handling

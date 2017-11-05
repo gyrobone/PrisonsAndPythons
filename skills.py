@@ -4,8 +4,10 @@ import dndchar
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
+# Default proficiency bonus
 proficiency_bonus = 2
 
+# List of all skills with empty modifiers by default
 player_skills = {'Acrobatics': '', 'Animal Handling': '', 'Athletics': '', 'Arcana': '',
                  'Deception': '', 'History': '', 'Insight': '', 'Intimidation': '',
                  'Investigation': '', 'Medicine': '', 'Nature': '', 'Perception': '',
@@ -61,7 +63,6 @@ def gen_skills(clss):
         choice2 = input("Second Choice?\n").title()
         if choice1 and choice2 in barb_skills:
             skill_list = [saves[0], saves[2], choice1, choice2]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[0]
             player_proficiencies['proficient_skill2'] = saves[2]
             player_proficiencies['proficient_skill3'] = choice1
@@ -75,7 +76,6 @@ def gen_skills(clss):
         choice3 = input("Third Choice?\n").title()
         if choice1 and choice2 and choice3 in skills:
             skill_list = [saves[1], saves[2], choice1, choice2, choice3]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[1]
             player_proficiencies['proficient_skill2'] = saves[2]
             player_proficiencies['proficient_skill3'] = choice1
@@ -89,7 +89,6 @@ def gen_skills(clss):
         choice2 = input("Second Choice?\n").title()
         if choice1 and choice2 in cleric_skills:
             skill_list = [saves[4], saves[5], choice1, choice2]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[4]
             player_proficiencies['proficient_skill2'] = saves[5]
             player_proficiencies['proficient_skill3'] = choice1
@@ -102,7 +101,6 @@ def gen_skills(clss):
         choice2 = input("Second Choice?\n").title()
         if choice1 and choice2 in druid_skills:
             skill_list = [saves[3], saves[4], choice1, choice2]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[3]
             player_proficiencies['proficient_skill2'] = saves[4]
             player_proficiencies['proficient_skill3'] = choice1
@@ -115,7 +113,6 @@ def gen_skills(clss):
         choice2 = input("Second Choice?\n").title()
         if choice1 and choice2 in fighter_skills:
             skill_list = [saves[0], saves[2], choice1, choice2]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[0]
             player_proficiencies['proficient_skill2'] = saves[2]
             player_proficiencies['proficient_skill3'] = choice1
@@ -128,7 +125,6 @@ def gen_skills(clss):
         choice2 = input("Second Choice?\n").title()
         if choice1 and choice2 in monk_skills:
             skill_list = [saves[0], saves[1], choice1, choice2]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[0]
             player_proficiencies['proficient_skill2'] = saves[1]
             player_proficiencies['proficient_skill3'] = choice1
@@ -141,7 +137,6 @@ def gen_skills(clss):
         choice2 = input("Second Choice?\n").title()
         if choice1 and choice2 in paladin_skills:
             skill_list = [saves[4], saves[5], choice1, choice2]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[4]
             player_proficiencies['proficient_skill2'] = saves[5]
             player_proficiencies['proficient_skill3'] = choice1
@@ -155,7 +150,6 @@ def gen_skills(clss):
         choice3 = input("Third Choice?\n").title()
         if choice1 and choice2 and choice3 in ranger_skills:
             skill_list = [saves[0], saves[1], choice1, choice2, choice3]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[0]
             player_proficiencies['proficient_skill2'] = saves[1]
             player_proficiencies['proficient_skill3'] = choice1
@@ -171,7 +165,6 @@ def gen_skills(clss):
         choice4 = input("Fourth Choice?\n").title()
         if choice1 and choice2 and choice3 and choice4 in rogue_skills:
             skill_list = [saves[1], saves[3], choice1, choice2, choice3, choice4]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[1]
             player_proficiencies['proficient_skill2'] = saves[3]
             player_proficiencies['proficient_skill3'] = choice1
@@ -186,7 +179,6 @@ def gen_skills(clss):
         choice2 = input("Second Choice?\n").title()
         if choice1 and choice2 in sorcerer_skills:
             skill_list = [saves[2], saves[5], choice1, choice2]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[2]
             player_proficiencies['proficient_skill2'] = saves[5]
             player_proficiencies['proficient_skill3'] = choice1
@@ -199,7 +191,6 @@ def gen_skills(clss):
         choice2 = input("Second Choice?\n").title()
         if choice1 and choice2 in warlock_skills:
             skill_list = [saves[4], saves[5], choice1, choice2]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[4]
             player_proficiencies['proficient_skill2'] = saves[5]
             player_proficiencies['proficient_skill3'] = choice1
@@ -212,7 +203,6 @@ def gen_skills(clss):
         choice2 = input("Second Choice?\n").title()
         if choice1 and choice2 in wizard_skills:
             skill_list = [saves[3], saves[4], choice1, choice2]
-            dndchar.add_skills(skill_list)
             player_proficiencies['proficient_skill1'] = saves[3]
             player_proficiencies['proficient_skill2'] = saves[4]
             player_proficiencies['proficient_skill3'] = choice1
@@ -221,6 +211,7 @@ def gen_skills(clss):
             print("Please Enter Valid Skills")
 
 
+# Adds skill modifiers to CSV
 def skill_mods(name, dict):
     for key in list(dict):
         if key in ability_mods:
@@ -264,19 +255,20 @@ def skill_mods(name, dict):
     save_playerdata(name)
 
 
+# Saves data to CSV
 def save_playerdata(name):
     filename = str(name) + "_Skills.csv"
     if os.path.exists(dir_path + "/PlayerData/" + filename):
         print("File Already Exists")
         response = input("Would you like to overwrite it or save as a new copy?\nType 'overwrite' or 'new copy'\n").lower()
-        if response == "overwrite":
+        if response == "overwrite" or response == "ow":
             w = csv.writer(open(dir_path + "/PlayerData/" + filename, "w"))
             for key, val in player_skills.items():
                 w.writerow([key, val])
             for key, val in player_proficiencies.items():
                 w.writerow([key, val])
             print("Player Skills Saved")
-        elif response == "new copy":
+        elif response == "new copy" or response == "nc":
             w = csv.writer(open(dir_path + "/PlayerData/COPY_" + filename, "w"))
             for key, val in player_skills.items():
                 w.writerow([key, val])

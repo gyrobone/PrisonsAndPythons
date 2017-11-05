@@ -2,6 +2,7 @@ import csv
 import random
 import os
 import skills
+import health
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -60,6 +61,8 @@ def create_char(name, char_name, race, clss):
     if skill == "yes":
         skills.gen_skills(clss)
         skills.skill_mods(name, player_data)
+        health.set_hit_dice(name, clss, player_data)
+        save_playerdata(name)
     else:
         save_playerdata(name)
 
@@ -194,14 +197,6 @@ def add_race_mods(race):
     elif race == "Tiefling":
         player_data['cha'] += 2
         player_data['int'] += 1
-
-
-def add_skills(skills_list):
-    i = 0
-    while i < len(skills_list):
-        player_data['skill_prof' + str(i)] = skills_list[i]
-        i += 1
-    save_playerdata(player_data.get('name'))
 
 
 # Saves player data to new file if it doesn't exist already

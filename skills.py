@@ -262,14 +262,14 @@ def save_playerdata(name):
         print("File Already Exists")
         response = input("Would you like to overwrite it or save as a new copy?\nType 'overwrite' or 'new copy'\n").lower()
         if response == "overwrite" or response == "ow":
-            w = csv.writer(open(dir_path + "/PlayerData/" + filename, "w"))
+            w = csv.writer(open(dir_path + "/PlayerData/" + name + "/" + filename, "w"))
             for key, val in player_skills.items():
                 w.writerow([key, val])
             for key, val in player_proficiencies.items():
                 w.writerow([key, val])
             print("Player Skills Saved")
         elif response == "new copy" or response == "nc":
-            w = csv.writer(open(dir_path + "/PlayerData/COPY_" + filename, "w"))
+            w = csv.writer(open(dir_path + "/PlayerData/" + name + "/COPY_" + filename, "w"))
             for key, val in player_skills.items():
                 w.writerow([key, val])
             for key, val in player_proficiencies.items():
@@ -278,7 +278,7 @@ def save_playerdata(name):
         else:
             print("Please Enter Valid Command")
     else:
-        w = csv.writer(open(dir_path + "/PlayerData/" + filename, "w"))
+        w = csv.writer(open(dir_path + "/PlayerData/" + name + "/" + filename, "w"))
         for key, val in player_skills.items():
             w.writerow([key, val])
         for key, val in player_proficiencies.items():

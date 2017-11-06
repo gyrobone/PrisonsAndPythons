@@ -33,17 +33,17 @@ def create_char(name, char_name, race, clss):
             return
 
     # Set player name
-    player_data['name'] = name
-    player_data['char_name'] = char_name
+    player_data['name'] = name.title()
+    player_data['char_name'] = char_name.title()
 
     # Check if selected race and class are valid options
     if race in valid_races:
-        player_data['race'] = race
+        player_data['race'] = race.title()
     else:
         print("Please Enter Valid Race")
         return
     if clss in valid_classes:
-        player_data['class'] = clss
+        player_data['class'] = clss.title()
     else:
         print("Please Enter Valid Class")
         return
@@ -64,6 +64,7 @@ def create_char(name, char_name, race, clss):
         health.set_hit_dice(name, clss, player_data)
         save_playerdata(name)
     else:
+        health.set_hit_dice(name, clss, player_data)
         save_playerdata(name)
 
 
@@ -203,24 +204,24 @@ def add_race_mods(race):
 # If it does, it asks to player to overwrite it or save as a new copy ("COPY_Player_Data.csv")
 def save_playerdata(name):
     filename = str(name) + "_Data.csv"
-    if os.path.exists(dir_path + "/PlayerData/" + filename):
+    if os.path.exists(dir_path + "/PlayerData/" + name + "/" + filename):
         print("File Already Exists")
         response = input("Would you like to overwrite it or save as a new copy?\n"
                          "Type 'overwrite' or 'new copy'\n").lower()
         if response == "overwrite":
-            w = csv.writer(open(dir_path + "/PlayerData/" + filename, "w"))
+            w = csv.writer(open(dir_path + "/PlayerData/" + name + "/" + filename, "w"))
             for key, val in player_data.items():
                 w.writerow([key, val])
             print("Player Data Saved")
         elif response == "new copy":
-            w = csv.writer(open(dir_path + "/PlayerData/COPY_" + filename, "w"))
+            w = csv.writer(open(dir_path + "/PlayerData/" + name + "/COPY_" + filename, "w"))
             for key, val in player_data.items():
                 w.writerow([key, val])
             print("Player Data Saved")
         else:
             print("Please Enter Valid Command")
     else:
-        w = csv.writer(open(dir_path + "/PlayerData/" + filename, "w"))
+        w = csv.writer(open(dir_path + "/PlayerData/" + name + "/" + filename, "w"))
         for key, val in player_data.items():
             w.writerow([key, val])
         print("Player Data Saved")

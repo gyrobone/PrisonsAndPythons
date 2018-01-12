@@ -1,6 +1,8 @@
 import dndchar
 import roll
+import os
 
+dir_path = os.path.dirname(os.path.realpath(__file__))
 ascii_art = """\
                                        ..
                                      ,o"\"""o
@@ -54,6 +56,8 @@ while True:
         race_input = input("Character's Race?\n").title()
         class_input = input("Character's Class?\n").title()
         dndchar.create_char(name_input, char_input, race_input, class_input)
+    elif user_input == "path":
+        print(dir_path)
     elif user_input == "help":
         print("----------------------------------------------------------------------------------------------")
         print("Help\n-This command lists all usable commands")

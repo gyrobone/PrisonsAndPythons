@@ -38,18 +38,18 @@ def set_ac():
 
 def save_playerdata(name):
     filename = str(name) + "_Health.csv"
-    if os.path.exists(dir_path + "/PlayerData/" + filename):
+    if os.path.exists(dir_path + "\PlayerData\\" + filename):
         print("File Already Exists")
         response = input("Would you like to overwrite it or save as a new copy?\nType 'overwrite' or 'new copy'\n").lower()
         if response == "overwrite":
-            w = csv.writer(open(dir_path + "/PlayerData/" + name + "/" + filename, "w"))
+            w = csv.writer(open(dir_path + "\PlayerData\\" + filename, "w"))
             for key, val in player_health.items():
                 w.writerow([key, val])
             for key, val in player_ac.items():
                 w.writerow([key, val])
             print("Player Health Saved")
         elif response == "new copy":
-            w = csv.writer(open(dir_path + "/PlayerData/" + name + "/COPY_" + filename, "w"))
+            w = csv.writer(open(dir_path + "\PlayerData\\" + "COPY_" + filename, "w"))
             for key, val in player_health.items():
                 w.writerow([key, val])
             for key, val in player_ac.items():
@@ -58,7 +58,7 @@ def save_playerdata(name):
         else:
             print("Please Enter Valid Command")
     else:
-        w = csv.writer(open(dir_path + "/PlayerData/" + name + "/" + filename, "w"))
+        w = csv.writer(open(dir_path + "\PlayerData\\" + filename, "w"))
         for key, val in player_health.items():
             w.writerow([key, val])
         for key, val in player_ac.items():

@@ -148,6 +148,7 @@ def gen_abilities(clss):
 
 # Generates and stores each ability modifier
 def gen_ability_mods():
+    global ability_mod
     for key in list(player_data):
         if key in abilities:
             value = player_data.get(key)
